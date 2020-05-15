@@ -53,5 +53,25 @@ export default async function cleanProductInput(context, {
     delete input[forbiddenField];
   });
 
+  // If `descriptionByLanguage` isn't passed but `description` is, craft a default `descriptionByLanguage`
+  // with `description`'s value and the shop's default language, then delete `description`
+  if (typeof input.description === "string") {
+    if (!Array.isArray(input.descriptionByLanguage)) {
+      const { collections } = context;
+      const { Shops } = collections;
+
+      const shop = await Shops.findOne({ _id: shopId });
+
+      input.descriptionByLanguage = [
+        {
+          content: input.description,
+          language: shop.language
+        }
+      ];
+    }
+
+    delete input.description;
+  }
+
   return input;
 }

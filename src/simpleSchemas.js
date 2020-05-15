@@ -317,6 +317,7 @@ export const Product = new SimpleSchema({
     type: String,
     optional: true
   },
+  // DEPRECATED - use `descriptionByLanguage` instead
   "description": {
     type: String,
     optional: true
