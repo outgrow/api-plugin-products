@@ -253,6 +253,18 @@ export const ProductVariant = new SimpleSchema({
 });
 
 /**
+ * @name FieldByLanguage
+ * @type {SimpleSchema}
+ * @memberof Schemas
+ * @property {String} content required
+ * @property {String} language required
+ */
+export const FieldByLanguage = new SimpleSchema({
+  content: String,
+  language: String
+});
+
+/**
  * @name Product
  * @type {SimpleSchema}
  * @memberof Schemas
@@ -308,6 +320,13 @@ export const Product = new SimpleSchema({
   "description": {
     type: String,
     optional: true
+  },
+  "descriptionByLanguage": {
+    type: Array,
+    optional: true
+  },
+  "descriptionByLanguage.$": {
+    type: FieldByLanguage
   },
   "facebookMsg": {
     type: String,
