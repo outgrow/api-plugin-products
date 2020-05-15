@@ -9,8 +9,14 @@ type Product {
   "Hash to compare with publishedProductHash, to see if this product has changed since it was last published"
   currentProductHash: String
 
-  "The full product description, which may have newline characters in it"
-  description: String
+  "The full product description, which may have newline characters in it, translated (if available) based on shop language"
+  description(
+    """
+    The language in which you want the product description. If no translation is available for this language,
+    it will be in the default language of the related shop.
+    """
+    language: String!
+  ): String
 
   "True if this product has been deleted. Typically, deleted products are not returned in queries."
   isDeleted: Boolean!
@@ -385,6 +391,14 @@ input UpdateProductInput {
   shopId: ID!
 }
 
+input FieldByLanguageInput {
+  "The field's value for this language"
+  content: String!
+
+  "The language code"
+  language: String!
+}
+
 "Mutation input for a product"
 input ProductInput {
   """
@@ -396,8 +410,12 @@ input ProductInput {
   """
   _id: String
 
-  "The full product description, which may have newline characters in it"
+  "The full product description, which may have newline characters in it. DEPRECATED. Use `descriptionByLanguage` field instead."
+  # @deprecated isn't allowed on input fields yet. See See https://github.com/graphql/graphql-spec/pull/525
   description: String
+
+  "The full product description by language, which may have newline characters in it."
+  descriptionByLanguage: [FieldByLanguageInput]
 
   "Facebook message"
   facebookMsg: String
