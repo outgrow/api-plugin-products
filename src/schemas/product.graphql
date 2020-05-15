@@ -15,7 +15,7 @@ type Product {
     The language in which you want the product description. If no translation is available for this language,
     it will be in the default language of the related shop.
     """
-    language: String!
+    language: String
   ): String
 
   "True if this product has been deleted. Typically, deleted products are not returned in queries."

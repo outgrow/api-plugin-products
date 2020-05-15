@@ -9,9 +9,13 @@ import tags from "./tags.js";
 
 export default {
   _id: (node) => encodeProductOpaqueId(node._id),
-  description: (node, { language }) => node.descriptionByLanguage &&
-    node.descriptionByLanguage.length &&
-    getFieldForLanguage(language, node.descriptionByLanguage),
+  description: (node, { language }) => {
+    if (language && node.descriptionByLanguage && node.descriptionByLanguage.length) {
+      return getFieldForLanguage(language, node.descriptionByLanguage);
+    }
+
+    return node.description;
+  },
   media: (node, args, context) => getProductMedia(node, args, context),
   metafields: (node) => node.metafields || [],
   shop: resolveShopFromShopId,
