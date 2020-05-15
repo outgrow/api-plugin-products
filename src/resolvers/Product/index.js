@@ -1,5 +1,6 @@
 import resolveShopFromShopId from "@reactioncommerce/api-utils/graphql/resolveShopFromShopId.js";
 import { encodeProductOpaqueId } from "../../xforms/id.js";
+import getFieldForLanguage from "../../utils/getFieldForLanguage.js";
 import getVariants from "../../utils/getVariants.js";
 import getProductMedia from "../../utils/getProductMedia.js";
 import socialMetadata from "./socialMetadata.js";
@@ -8,6 +9,9 @@ import tags from "./tags.js";
 
 export default {
   _id: (node) => encodeProductOpaqueId(node._id),
+  description: (node, { language }) => node.descriptionByLanguage &&
+    node.descriptionByLanguage.length &&
+    getFieldForLanguage(language, node.descriptionByLanguage),
   media: (node, args, context) => getProductMedia(node, args, context),
   metafields: (node) => node.metafields || [],
   shop: resolveShopFromShopId,
