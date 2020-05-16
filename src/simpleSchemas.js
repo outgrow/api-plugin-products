@@ -355,9 +355,17 @@ export const Product = new SimpleSchema({
   "isVisible": {
     type: Boolean
   },
+  // DEPRECATED - use `metaDescriptionByLanguage` instead
   "metaDescription": {
     type: String,
     optional: true
+  },
+  "metaDescriptionByLanguage": {
+    type: Array,
+    optional: true
+  },
+  "metaDescriptionByLanguage.$": {
+    type: FieldByLanguage
   },
   "metafields": {
     type: Array,
@@ -370,9 +378,17 @@ export const Product = new SimpleSchema({
     type: String,
     optional: true
   },
+  // DEPRECATED - use `pageTitleByLanguage` instead
   "pageTitle": {
     type: String,
     optional: true
+  },
+  "pageTitleByLanguage": {
+    type: Array,
+    optional: true
+  },
+  "pageTitleByLanguage.$": {
+    type: FieldByLanguage
   },
   "parcel": {
     type: ShippingParcel,
@@ -410,8 +426,16 @@ export const Product = new SimpleSchema({
     type: String,
     optional: true
   },
+  // DEPRECATED - use `titleByLanguage` instead
   "title": {
     type: String
+  },
+  "titleByLanguage": {
+    type: Array,
+    optional: true
+  },
+  "titleByLanguage.$": {
+    type: FieldByLanguage
   },
   "twitterMsg": {
     type: String,

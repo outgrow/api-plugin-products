@@ -28,10 +28,16 @@ type Product {
   media(
     "Determines whether variant media should be included in the product or not"
     shouldIncludeVariantMedia: Boolean = true
-    ): [ImageInfo]
+  ): [ImageInfo]
 
-  "The product description to use for page `description` meta element in HTML"
-  metaDescription: String
+  "The product description to use for page `description` meta element in HTML, translated (if available) based on shop language"
+  metaDescription(
+    """
+    The language in which you want the product meta description. If no translation is available for this language,
+    it will be in the default language of the related shop.
+    """
+    language: String
+  ): String
 
   "Arbitrary additional metadata about this product"
   metafields: [Metafield]!
@@ -39,8 +45,14 @@ type Product {
   "The country of origin"
   originCountry: String
 
-  "Subtitle"
-  pageTitle: String
+  "Subtitle, translated (if available) based on shop language"
+  pageTitle(
+    """
+    The language in which you want the subtitle. If no translation is available for this language,
+    it will be in the default language of the related shop.
+    """
+    language: String
+  ): String
 
   "An arbitrary product type value, such as from an external system"
   productType: String
@@ -93,8 +105,14 @@ type Product {
     sortBy: TagSortByField = _id
   ): TagConnection
 
-  "Product title"
-  title: String
+  "Product title, translated (if available) based on shop language"
+  title(
+    """
+    The language in which you want the product title. If no translation is available for this language,
+    it will be in the default language of the related shop.
+    """
+    language: String
+  ): String
 
   "The date and time at which this product was last updated"
   updatedAt: DateTime
@@ -429,8 +447,12 @@ input ProductInput {
   "True if this product should be shown to shoppers. Typically, non-visible products are not returned in queries."
   isVisible: Boolean
 
-  "The product description to use for page `description` meta element in HTML"
+  "The product description to use for page `description` meta element in HTML. DEPRECATED. Use `descriptionByLanguage` field instead."
+  # @deprecated isn't allowed on input fields yet. See See https://github.com/graphql/graphql-spec/pull/525
   metaDescription: String
+
+  "The product description to use for page `description` meta element in HTML, by language."
+  metaDescriptionByLanguage: [FieldByLanguageInput]
 
   "Arbitrary additional metadata about this product"
   metafields: [MetafieldInput]
@@ -438,8 +460,12 @@ input ProductInput {
   "The country of origin"
   originCountry: String
 
-  "Subtitle"
+  "Subtitle. DEPRECATED. Use `pageTitleByLanguage` field instead."
+  # @deprecated isn't allowed on input fields yet. See See https://github.com/graphql/graphql-spec/pull/525
   pageTitle: String
+
+  "Subtitle by language"
+  pageTitleByLanguage: [FieldByLanguageInput]
 
   "Pinterest message"
   pinterestMsg: String
@@ -459,8 +485,12 @@ input ProductInput {
   "The list of tag IDs that have been applied to this product"
   tagIds: [ID]
 
-  "Product title"
+  "Product title. DEPRECATED. Use `titleByLanguage` field instead."
+  # @deprecated isn't allowed on input fields yet. See See https://github.com/graphql/graphql-spec/pull/525
   title: String
+
+  "Product title by language"
+  titleByLanguage: [FieldByLanguageInput]
 
   "Twitter message"
   twitterMsg: String

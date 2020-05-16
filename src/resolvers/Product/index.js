@@ -9,19 +9,16 @@ import tags from "./tags.js";
 
 export default {
   _id: (node) => encodeProductOpaqueId(node._id),
-  description: (node, { language }) => {
-    if (language && node.descriptionByLanguage && node.descriptionByLanguage.length) {
-      return getFieldForLanguage(language, node.descriptionByLanguage);
-    }
-
-    return node.description;
-  },
+  description: (node, { language }) => getFieldForLanguage(node, language, "description"),
   media: (node, args, context) => getProductMedia(node, args, context),
+  metaDescription: (node, { language }) => getFieldForLanguage(node, language, "metaDescription"),
   metafields: (node) => node.metafields || [],
+  pageTitle: (node, { language }) => getFieldForLanguage(node, language, "pageTitle"),
   shop: resolveShopFromShopId,
   slug: (node) => node.handle,
   socialMetadata,
   tagIds,
   tags,
+  title: (node, { language }) => getFieldForLanguage(node, language, "title"),
   variants: (node, args, context) => getVariants(context, node._id, true, args)
 };
