@@ -409,14 +409,6 @@ input UpdateProductInput {
   shopId: ID!
 }
 
-input FieldByLanguageInput {
-  "The field's value for this language"
-  content: String!
-
-  "The language code"
-  language: String!
-}
-
 "Mutation input for a product"
 input ProductInput {
   """
